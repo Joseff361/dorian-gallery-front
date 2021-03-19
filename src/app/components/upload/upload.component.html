@@ -1,1 +1,49 @@
-<p>upload works!</p>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+    <p style="color: white" > Loading... </p>
+</ngx-spinner>
+
+
+<div class="row meh">
+    <div class="col-md-5 mx-auto mt-5">
+        <div class="card">
+            <div class="card-header text-center"><strong>Upload image to Dorian's Gallery</strong></div>
+            <div class="card-body text-center">
+                <form novalidate (ngSubmit)="onSubmit()">
+
+                    <!-- UPLOAD THE FILE-->
+                    <div class="mb-3">
+                        <input (change)="onFileChange($event)"
+                        accept="image/png, image/jpeg, image/gif, image/jpg"
+                        #imagenInputFile
+                        class="form-control meh" type="file" id="formFile">
+                    </div>
+
+                    <!-- PREVIEW -->
+                    <div *ngIf="theImage" class="mb-3">
+                        <h3>Preview</h3>
+                        <div>
+                            <img class="image-thumbnail" [src]="imgMinUrl">
+                        </div>
+                    </div>
+
+                    <!-- ERROR -->
+                    <div *ngIf="errMessage" class="alert alert-danger" role="alert">
+                        {{errMessage}}
+                    </div>
+
+                    <!-- SUBMIT BUTTON-->
+                    <div class="mb-3">
+                        <button class="btn" type="submit" [disabled]="!theImage">
+                            <h3><i class="fa fa-cloud-upload" aria-hidden="true"></i> Upload</h3>
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn" [disabled]="!theImage" (click)="reset()">
+                            <h3><i class="fa fa-trash-o" aria-hidden="true"></i> Reset</h3>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

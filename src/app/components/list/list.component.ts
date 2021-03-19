@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
+import { CloudinaryService } from '../../services/cloudinary.service';
+import { Image } from '../../shared/Image';
 
 @Component({
   selector: 'app-list',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  listOfImages: Image[];
+  errorMessage: String;
+
+  constructor(
+    private spinner: NgxSpinnerService,
+    private cloudinaryService: CloudinaryService
+  ) { }
 
   ngOnInit(): void {
+    this.spinner.show();
+    this.cloudinaryService.getImageList()
+    .subscribe(data => {
+      this.listOfImages = data;
+      this.spinner.hide();
+    }, err => {
+      this.errorMessage = "A very serious error has occurred D:"
+      this.spinner.hide();
+    })
   }
 
 }
