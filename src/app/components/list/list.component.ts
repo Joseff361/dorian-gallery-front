@@ -19,6 +19,10 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.createList();
+  }
+
+  createList(): void{
     this.spinner.show();
     this.cloudinaryService.getImageList()
     .subscribe(data => {
@@ -28,6 +32,20 @@ export class ListComponent implements OnInit {
       this.errorMessage = "A very serious error has occurred D:"
       this.spinner.hide();
     })
+  }
+
+  delete(theId: String): void{
+    this.spinner.show();
+    this.cloudinaryService.deleteImage(theId)
+      .subscribe(
+        data => {
+          this.spinner.hide();
+          this.createList();
+        }, err => {
+          this.spinner.hide();
+          console.log(err);
+        }
+      )
   }
 
 }
